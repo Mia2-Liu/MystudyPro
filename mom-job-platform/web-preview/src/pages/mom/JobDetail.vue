@@ -114,6 +114,20 @@ function formatWorkDays(days) {
 
 async function handleApply() {
   if (applying.value) return
+
+  const token = localStorage.getItem('token')
+  if (!token) {
+    alert('请先登录')
+    router.push('/login')
+    return
+  }
+
+  const userInfo = JSON.parse(localStorage.getItem('userInfo') || '{}')
+  if (userInfo.role !== 'mom') {
+    alert('只有全职妈妈账号才能申请工作')
+    return
+  }
+
   applying.value = true
 
   try {

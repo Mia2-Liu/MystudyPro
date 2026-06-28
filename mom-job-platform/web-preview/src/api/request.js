@@ -10,6 +10,13 @@ request.interceptors.request.use(config => {
   if (token) {
     config.headers.Authorization = `Bearer ${token}`
   }
+  if (config.method === 'get' && config.params) {
+    Object.keys(config.params).forEach(key => {
+      if (config.params[key] === undefined || config.params[key] === null || config.params[key] === '') {
+        delete config.params[key]
+      }
+    })
+  }
   return config
 })
 
@@ -18,7 +25,7 @@ request.interceptors.response.use(
     if (response.data.code === 0) {
       return response.data.data
     } else {
-      alert(response.data.message || '请求失败')
+      console.error('业务错误:', response.data.message)
       return Promise.reject(response.data)
     }
   },
@@ -26,9 +33,11 @@ request.interceptors.response.use(
     if (error.response?.status === 401) {
       localStorage.removeItem('token')
       localStorage.removeItem('userInfo')
-      window.location.hash = '#/login'
+      if (window.location.hash !== '#/login') {
+        window.location.hash = '#/login'
+      }
     }
-    alert('网络错误')
+    console.error('请求错误:', error.message)
     return Promise.reject(error)
   }
 )

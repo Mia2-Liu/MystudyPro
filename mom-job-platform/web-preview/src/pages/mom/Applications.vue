@@ -54,6 +54,11 @@ const loading = ref(false)
 const activeTab = ref('all')
 
 onMounted(() => {
+  const token = localStorage.getItem('token')
+  if (!token) {
+    router.push('/login')
+    return
+  }
   loadApplications()
 })
 

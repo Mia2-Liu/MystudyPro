@@ -93,9 +93,50 @@ async function updateCompanyProfile(req, res) {
   }
 }
 
+async function submitVerification(req, res) {
+  try {
+    const userId = req.user.id;
+    const { business_license, company_name } = req.body;
+
+    if (!business_license) {
+      return error(res, '请上传营业执照');
+    }
+    if (!company_name) {
+      return error(res, '请填写企业名称');
+    }
+
+    let profile = await CompanyProfile.findOne({ where: { user_id: userId } });
+
+    if (!profile) {
+      profile = await CompanyProfile.create({ user_id: userId });
+    }
+
+    if (profile.verify_status === 1) {
+      return error(res, '认证审核中，请耐心等待');
+    }
+    if (profile.verify_status === 2) {
+      return error(res, '企业已通过认证，无需重复提交');
+    }
+
+    await profile.update({
+      company_name,
+      business_license,
+      verify_status: 1,
+      verify_submitted_at: new Date(),
+      verify_remark: null,
+    });
+
+    success(res, profile, '认证提交成功，等待审核');
+  } catch (err) {
+    console.error('submitVerification error:', err);
+    error(res, '提交失败', 500, 500);
+  }
+}
+
 module.exports = {
   getMomProfile,
   updateMomProfile,
   getCompanyProfile,
   updateCompanyProfile,
+  submitVerification,
 };

@@ -36,7 +36,10 @@
             <span class="tag" v-if="job.work_type">{{ job.work_type }}</span>
           </div>
           <div class="job-footer">
-            <span class="company-name">{{ job.companyProfile?.company_name || '企业直招' }}</span>
+            <div class="company-row">
+              <span class="company-name">{{ job.companyProfile?.company_name || '企业直招' }}</span>
+              <span class="verified-badge" v-if="job.companyProfile?.verified || job.companyProfile?.verify_status === 2">✓ 已认证</span>
+            </div>
             <span class="job-address">📍 {{ job.address }}</span>
           </div>
         </div>
@@ -251,9 +254,24 @@ function formatSalary(job) {
   border-top: 1px solid #f0f0f0;
 }
 
+.company-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
 .company-name {
   font-size: 13px;
   color: #333;
+}
+
+.verified-badge {
+  font-size: 10px;
+  color: #52C41A;
+  background: #F6FFED;
+  padding: 1px 5px;
+  border-radius: 4px;
+  font-weight: 500;
 }
 
 .job-address {

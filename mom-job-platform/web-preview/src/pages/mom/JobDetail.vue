@@ -55,7 +55,10 @@
       <div class="section company-section" v-if="job.companyProfile">
         <span class="section-title">企业信息</span>
         <div class="company-info">
-          <span class="company-name">{{ job.companyProfile.company_name }}</span>
+          <div class="company-name-row">
+            <span class="company-name">{{ job.companyProfile.company_name }}</span>
+            <span class="verified-badge" v-if="job.companyProfile.verified || job.companyProfile.verify_status === 2">✓ 已认证</span>
+          </div>
           <span class="company-desc" v-if="job.companyProfile.industry">{{ job.companyProfile.industry }} · {{ job.companyProfile.scale }}</span>
           <span class="company-intro" v-if="job.companyProfile.intro">{{ job.companyProfile.intro }}</span>
         </div>
@@ -271,12 +274,27 @@ async function handleApply() {
   margin-bottom: 30px;
 }
 
+.company-name-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 6px;
+}
+
 .company-name {
   display: block;
   font-size: 15px;
   font-weight: 600;
   color: #333;
-  margin-bottom: 6px;
+}
+
+.verified-badge {
+  font-size: 11px;
+  color: #52C41A;
+  background: #F6FFED;
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-weight: 500;
 }
 
 .company-desc {

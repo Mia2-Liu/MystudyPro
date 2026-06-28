@@ -32,7 +32,7 @@ async function getJobList(req, res) {
         {
           model: CompanyProfile,
           as: 'companyProfile',
-          attributes: ['company_name', 'industry', 'scale'],
+          attributes: ['company_name', 'industry', 'scale', 'verified', 'verify_status'],
         },
       ],
       order,

@@ -6,7 +6,7 @@
           全部
         </div>
         <div class="tab-item" :class="{ active: activeTab === 'pending' }" @click="switchTab('pending')">
-          待处理
+          待企业审核
         </div>
         <div class="tab-item" :class="{ active: activeTab === 'accepted' }" @click="switchTab('accepted')">
           已通过
@@ -85,7 +85,7 @@ async function loadApplications() {
 
 function getStatusText(status) {
   const map = {
-    pending: '待处理',
+    pending: '待企业审核',
     accepted: '已通过',
     rejected: '已拒绝'
   }

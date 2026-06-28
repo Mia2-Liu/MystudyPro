@@ -8,5 +8,6 @@ router.put('/mom', authMiddleware, requireRole('mom'), profileController.updateM
 
 router.get('/company', authMiddleware, requireRole('company'), profileController.getCompanyProfile);
 router.put('/company', authMiddleware, requireRole('company'), profileController.updateCompanyProfile);
+router.post('/company/verify', authMiddleware, requireRole('company'), profileController.submitVerification);
 
 module.exports = router;

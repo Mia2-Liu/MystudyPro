@@ -29,3 +29,11 @@ export function updateCompanyProfile(data) {
     data
   })
 }
+
+export function submitVerification(data) {
+  return request({
+    url: '/profile/company/verify',
+    method: 'POST',
+    data
+  })
+}

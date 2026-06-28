@@ -53,6 +53,26 @@ const CompanyProfile = sequelize.define('CompanyProfile', {
     defaultValue: 0,
     comment: '认证状态：0-未认证，1-已认证',
   },
+  business_license: {
+    type: DataTypes.STRING(255),
+    allowNull: true,
+    comment: '营业执照图片URL',
+  },
+  verify_status: {
+    type: DataTypes.TINYINT,
+    defaultValue: 0,
+    comment: '审核状态：0-未提交，1-审核中，2-已通过，3-已拒绝',
+  },
+  verify_remark: {
+    type: DataTypes.STRING(255),
+    allowNull: true,
+    comment: '审核备注',
+  },
+  verify_submitted_at: {
+    type: DataTypes.DATE,
+    allowNull: true,
+    comment: '提交审核时间',
+  },
 }, {
   tableName: 'company_profiles',
 });

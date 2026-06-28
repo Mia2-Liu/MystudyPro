@@ -1,62 +1,64 @@
 <template>
   <div class="company-index">
-    <div class="header">
-      <div class="user-info">
-        <span class="company-name">{{ companyInfo.company_name || '完善企业信息' }}</span>
-        <span class="company-desc">{{ companyInfo.industry || '点击设置企业资料' }}</span>
-      </div>
-    </div>
-
-    <div class="stat-cards">
-      <div class="stat-card">
-        <span class="stat-num">{{ stats.total || 0 }}</span>
-        <span class="stat-label">发布工作</span>
-      </div>
-      <div class="stat-card">
-        <span class="stat-num">{{ stats.active || 0 }}</span>
-        <span class="stat-label">招聘中</span>
-      </div>
-      <div class="stat-card">
-        <span class="stat-num">{{ stats.applications || 0 }}</span>
-        <span class="stat-label">新申请</span>
-      </div>
-    </div>
-
-    <div class="quick-actions">
-      <div class="action-card publish" @click="goPublish">
-        <span class="action-icon">📢</span>
-        <span class="action-title">发布工作</span>
-        <span class="action-desc">快速发布招聘需求</span>
-      </div>
-      <div class="action-card manage" @click="goJobManage">
-        <span class="action-icon">📋</span>
-        <span class="action-title">工作管理</span>
-        <span class="action-desc">管理已发布的工作</span>
-      </div>
-    </div>
-
-    <div class="recent-section">
-      <div class="section-header">
-        <span class="section-title">最近发布</span>
-        <span class="section-more" @click="goJobManage">查看全部 ›</span>
+    <div class="content-wrap">
+      <div class="header">
+        <div class="user-info">
+          <span class="company-name">{{ companyInfo.company_name || '完善企业信息' }}</span>
+          <span class="company-desc">{{ companyInfo.industry || '点击设置企业资料' }}</span>
+        </div>
       </div>
 
-      <div class="job-list">
-        <div class="job-item" v-for="job in recentJobs" :key="job.id" @click="goApplicants(job.id)">
-          <div class="job-info">
-            <span class="job-title">{{ job.title }}</span>
-            <span class="job-time">{{ job.work_start_time }} - {{ job.work_end_time }}</span>
-          </div>
-          <div class="job-right">
-            <span class="apply-count">{{ job.apply_count }}人申请</span>
-            <span class="job-status" :class="job.status === 1 ? 'active' : 'inactive'">
-              {{ job.status === 1 ? '招聘中' : '已下架' }}
-            </span>
-          </div>
+      <div class="stat-cards">
+        <div class="stat-card">
+          <span class="stat-num">{{ stats.total || 0 }}</span>
+          <span class="stat-label">发布工作</span>
+        </div>
+        <div class="stat-card">
+          <span class="stat-num">{{ stats.active || 0 }}</span>
+          <span class="stat-label">招聘中</span>
+        </div>
+        <div class="stat-card">
+          <span class="stat-num">{{ stats.applications || 0 }}</span>
+          <span class="stat-label">新申请</span>
+        </div>
+      </div>
+
+      <div class="quick-actions">
+        <div class="action-card publish" @click="goPublish">
+          <span class="action-icon">📢</span>
+          <span class="action-title">发布工作</span>
+          <span class="action-desc">快速发布招聘需求</span>
+        </div>
+        <div class="action-card manage" @click="goJobManage">
+          <span class="action-icon">📋</span>
+          <span class="action-title">工作管理</span>
+          <span class="action-desc">管理已发布的工作</span>
+        </div>
+      </div>
+
+      <div class="recent-section">
+        <div class="section-header">
+          <span class="section-title">最近发布</span>
+          <span class="section-more" @click="goJobManage">查看全部 ›</span>
         </div>
 
-        <div class="empty" v-if="recentJobs.length === 0">
-          <span class="empty-text">暂无发布的工作</span>
+        <div class="job-list">
+          <div class="job-item" v-for="job in recentJobs" :key="job.id" @click="goApplicants(job.id)">
+            <div class="job-info">
+              <span class="job-title">{{ job.title }}</span>
+              <span class="job-time">{{ job.work_start_time }} - {{ job.work_end_time }}</span>
+            </div>
+            <div class="job-right">
+              <span class="apply-count">{{ job.apply_count }}人申请</span>
+              <span class="job-status" :class="job.status === 1 ? 'active' : 'inactive'">
+                {{ job.status === 1 ? '招聘中' : '已下架' }}
+              </span>
+            </div>
+          </div>
+
+          <div class="empty" v-if="recentJobs.length === 0">
+            <span class="empty-text">暂无发布的工作</span>
+          </div>
         </div>
       </div>
     </div>
@@ -130,9 +132,16 @@ function goProfile() {
 
 <style scoped lang="scss">
 .company-index {
-  min-height: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
   background: #f8f8f8;
-  padding-bottom: 60px;
+}
+
+.content-wrap {
+  flex: 1;
+  overflow-y: auto;
+  padding-bottom: 10px;
 }
 
 .header {
@@ -330,10 +339,8 @@ function goProfile() {
 }
 
 .bottom-nav {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
+  flex-shrink: 0;
+  width: 100%;
   height: 50px;
   background: #fff;
   display: flex;

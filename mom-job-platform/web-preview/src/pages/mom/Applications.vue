@@ -1,38 +1,40 @@
 <template>
   <div class="applications-page">
-    <div class="tab-bar">
-      <div class="tab-item" :class="{ active: activeTab === 'all' }" @click="switchTab('all')">
-        全部
-      </div>
-      <div class="tab-item" :class="{ active: activeTab === 'pending' }" @click="switchTab('pending')">
-        待处理
-      </div>
-      <div class="tab-item" :class="{ active: activeTab === 'accepted' }" @click="switchTab('accepted')">
-        已通过
-      </div>
-      <div class="tab-item" :class="{ active: activeTab === 'rejected' }" @click="switchTab('rejected')">
-        已拒绝
-      </div>
-    </div>
-
-    <div class="application-list">
-      <div class="app-card" v-for="app in applicationList" :key="app.id">
-        <div class="app-header">
-          <span class="job-title">{{ app.job?.title }}</span>
-          <span class="app-status" :class="app.status">{{ getStatusText(app.status) }}</span>
+    <div class="content-wrap">
+      <div class="tab-bar">
+        <div class="tab-item" :class="{ active: activeTab === 'all' }" @click="switchTab('all')">
+          全部
         </div>
-        <div class="app-info">
-          <span class="info-text">⏰ {{ app.job?.work_start_time }} - {{ app.job?.work_end_time }}</span>
-          <span class="info-text">💼 {{ app.job?.work_type || '全职' }}</span>
+        <div class="tab-item" :class="{ active: activeTab === 'pending' }" @click="switchTab('pending')">
+          待处理
         </div>
-        <div class="app-footer">
-          <span class="company">{{ app.job?.companyProfile?.company_name || '企业直招' }}</span>
-          <span class="apply-time">{{ formatTime(app.created_at) }}</span>
+        <div class="tab-item" :class="{ active: activeTab === 'accepted' }" @click="switchTab('accepted')">
+          已通过
+        </div>
+        <div class="tab-item" :class="{ active: activeTab === 'rejected' }" @click="switchTab('rejected')">
+          已拒绝
         </div>
       </div>
 
-      <div class="empty" v-if="!loading && applicationList.length === 0">
-        <span class="empty-text">暂无申请记录</span>
+      <div class="application-list">
+        <div class="app-card" v-for="app in applicationList" :key="app.id">
+          <div class="app-header">
+            <span class="job-title">{{ app.job?.title }}</span>
+            <span class="app-status" :class="app.status">{{ getStatusText(app.status) }}</span>
+          </div>
+          <div class="app-info">
+            <span class="info-text">⏰ {{ app.job?.work_start_time }} - {{ app.job?.work_end_time }}</span>
+            <span class="info-text">💼 {{ app.job?.work_type || '全职' }}</span>
+          </div>
+          <div class="app-footer">
+            <span class="company">{{ app.job?.companyProfile?.company_name || '企业直招' }}</span>
+            <span class="apply-time">{{ formatTime(app.created_at) }}</span>
+          </div>
+        </div>
+
+        <div class="empty" v-if="!loading && applicationList.length === 0">
+          <span class="empty-text">暂无申请记录</span>
+        </div>
       </div>
     </div>
 
@@ -104,9 +106,17 @@ function onTabChange(tab) {
 <style scoped lang="scss">
 .applications-page {
   height: 100%;
+  display: flex;
+  flex-direction: column;
   background: #f8f8f8;
-  padding-bottom: 60px;
   position: relative;
+}
+
+.content-wrap {
+  flex: 1;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
 }
 
 .tab-bar {
@@ -114,8 +124,7 @@ function onTabChange(tab) {
   background: #fff;
   padding: 0 5px;
   border-bottom: 1px solid #eee;
-  position: sticky;
-  top: 0;
+  flex-shrink: 0;
   z-index: 10;
 }
 

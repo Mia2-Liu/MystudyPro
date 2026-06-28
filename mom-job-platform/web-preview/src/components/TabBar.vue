@@ -27,10 +27,8 @@ defineEmits(['change'])
 
 <style scoped lang="scss">
 .tabbar {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
+  flex-shrink: 0;
+  width: 100%;
   height: 60px;
   background: #fff;
   display: flex;

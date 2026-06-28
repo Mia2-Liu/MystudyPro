@@ -1,47 +1,49 @@
 <template>
   <div class="profile-page">
-    <div class="profile-header">
-      <div class="user-info">
-        <div class="avatar">
-          <span>👩</span>
+    <div class="content-wrap">
+      <div class="profile-header">
+        <div class="user-info">
+          <div class="avatar">
+            <span>👩</span>
+          </div>
+          <div class="user-detail">
+            <span class="nickname">{{ userStore.userInfo?.nickname || '微信用户' }}</span>
+            <span class="role-tag">全职妈妈</span>
+          </div>
         </div>
-        <div class="user-detail">
-          <span class="nickname">{{ userStore.userInfo?.nickname || '微信用户' }}</span>
-          <span class="role-tag">全职妈妈</span>
+      </div>
+
+      <div class="menu-section">
+        <div class="menu-item" @click="goResume">
+          <span class="menu-icon">📝</span>
+          <span class="menu-title">我的简历</span>
+          <span class="menu-arrow">›</span>
+        </div>
+        <div class="menu-item" @click="goApplications">
+          <span class="menu-icon">📋</span>
+          <span class="menu-title">我的申请</span>
+          <span class="menu-arrow">›</span>
         </div>
       </div>
-    </div>
 
-    <div class="menu-section">
-      <div class="menu-item" @click="goResume">
-        <span class="menu-icon">📝</span>
-        <span class="menu-title">我的简历</span>
-        <span class="menu-arrow">›</span>
+      <div class="menu-section">
+        <div class="menu-item">
+          <span class="menu-icon">🔔</span>
+          <span class="menu-title">消息通知</span>
+          <span class="menu-arrow">›</span>
+        </div>
+        <div class="menu-item">
+          <span class="menu-icon">⚙️</span>
+          <span class="menu-title">设置</span>
+          <span class="menu-arrow">›</span>
+        </div>
       </div>
-      <div class="menu-item" @click="goApplications">
-        <span class="menu-icon">📋</span>
-        <span class="menu-title">我的申请</span>
-        <span class="menu-arrow">›</span>
-      </div>
-    </div>
 
-    <div class="menu-section">
-      <div class="menu-item">
-        <span class="menu-icon">🔔</span>
-        <span class="menu-title">消息通知</span>
-        <span class="menu-arrow">›</span>
-      </div>
-      <div class="menu-item">
-        <span class="menu-icon">⚙️</span>
-        <span class="menu-title">设置</span>
-        <span class="menu-arrow">›</span>
-      </div>
-    </div>
-
-    <div class="menu-section">
-      <div class="menu-item" @click="handleLogout">
-        <span class="menu-icon">🚪</span>
-        <span class="menu-title logout">退出登录</span>
+      <div class="menu-section">
+        <div class="menu-item" @click="handleLogout">
+          <span class="menu-icon">🚪</span>
+          <span class="menu-title logout">退出登录</span>
+        </div>
       </div>
     </div>
 
@@ -85,9 +87,15 @@ function onTabChange(tab) {
 <style scoped lang="scss">
 .profile-page {
   height: 100%;
+  display: flex;
+  flex-direction: column;
   background: #f8f8f8;
-  padding-bottom: 60px;
   position: relative;
+}
+
+.content-wrap {
+  flex: 1;
+  overflow-y: auto;
 }
 
 .profile-header {

@@ -1,48 +1,50 @@
 <template>
   <div class="job-list-page">
-    <div class="search-bar">
-      <div class="search-input">
-        <span class="search-icon">🔍</span>
-        <span class="search-placeholder">搜索工作岗位</span>
-      </div>
-    </div>
-
-    <div class="filter-bar">
-      <div class="filter-scroll">
-        <div class="filter-item" :class="{ active: activeSort === 'latest' }" @click="changeSort('latest')">
-          最新
-        </div>
-        <div class="filter-item" :class="{ active: activeSort === 'salary' }" @click="changeSort('salary')">
-          薪资最高
-        </div>
-        <div class="filter-item" :class="{ active: activeSort === 'hot' }" @click="changeSort('hot')">
-          热门
-        </div>
-        <div class="filter-item" v-for="type in workTypes" :key="type" :class="{ active: activeType === type }" @click="selectType(type)">
-          {{ type }}
-        </div>
-      </div>
-    </div>
-
-    <div class="job-list">
-      <div class="job-card" v-for="job in jobList" :key="job.id" @click="goDetail(job.id)">
-        <div class="job-header">
-          <span class="job-title">{{ job.title }}</span>
-          <span class="job-salary">{{ formatSalary(job) }}</span>
-        </div>
-        <div class="job-tags">
-          <span class="tag time-tag">⏰ {{ job.work_start_time }} - {{ job.work_end_time }}</span>
-          <span class="tag" v-if="job.work_type">{{ job.work_type }}</span>
-        </div>
-        <div class="job-footer">
-          <span class="company-name">{{ job.companyProfile?.company_name || '企业直招' }}</span>
-          <span class="job-address">📍 {{ job.address }}</span>
+    <div class="content-wrap">
+      <div class="search-bar">
+        <div class="search-input">
+          <span class="search-icon">🔍</span>
+          <span class="search-placeholder">搜索工作岗位</span>
         </div>
       </div>
 
-      <div class="loading-text" v-if="loading">加载中...</div>
-      <div class="empty" v-if="!loading && jobList.length === 0">
-        <span class="empty-text">暂无相关工作</span>
+      <div class="filter-bar">
+        <div class="filter-scroll">
+          <div class="filter-item" :class="{ active: activeSort === 'latest' }" @click="changeSort('latest')">
+            最新
+          </div>
+          <div class="filter-item" :class="{ active: activeSort === 'salary' }" @click="changeSort('salary')">
+            薪资最高
+          </div>
+          <div class="filter-item" :class="{ active: activeSort === 'hot' }" @click="changeSort('hot')">
+            热门
+          </div>
+          <div class="filter-item" v-for="type in workTypes" :key="type" :class="{ active: activeType === type }" @click="selectType(type)">
+            {{ type }}
+          </div>
+        </div>
+      </div>
+
+      <div class="job-list">
+        <div class="job-card" v-for="job in jobList" :key="job.id" @click="goDetail(job.id)">
+          <div class="job-header">
+            <span class="job-title">{{ job.title }}</span>
+            <span class="job-salary">{{ formatSalary(job) }}</span>
+          </div>
+          <div class="job-tags">
+            <span class="tag time-tag">⏰ {{ job.work_start_time }} - {{ job.work_end_time }}</span>
+            <span class="tag" v-if="job.work_type">{{ job.work_type }}</span>
+          </div>
+          <div class="job-footer">
+            <span class="company-name">{{ job.companyProfile?.company_name || '企业直招' }}</span>
+            <span class="job-address">📍 {{ job.address }}</span>
+          </div>
+        </div>
+
+        <div class="loading-text" v-if="loading">加载中...</div>
+        <div class="empty" v-if="!loading && jobList.length === 0">
+          <span class="empty-text">暂无相关工作</span>
+        </div>
       </div>
     </div>
 
@@ -122,9 +124,17 @@ function formatSalary(job) {
 <style scoped lang="scss">
 .job-list-page {
   height: 100%;
-  padding-bottom: 60px;
+  display: flex;
+  flex-direction: column;
   background: #f8f8f8;
   position: relative;
+}
+
+.content-wrap {
+  flex: 1;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
 }
 
 .search-bar {
